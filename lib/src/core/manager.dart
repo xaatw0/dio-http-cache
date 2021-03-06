@@ -12,11 +12,9 @@ class CacheManager {
   CacheConfig _config;
   ICacheStore _diskCacheStore;
   ICacheStore _memoryCacheStore;
-  MD5 _md5;
   Utf8Encoder _utf8encoder;
 
   CacheManager(this._config) {
-    _md5 = md5;
     _utf8encoder = const Utf8Encoder();
     if (!_config.skipDiskCache)
       _diskCacheStore = _config.diskStore ??
@@ -110,7 +108,7 @@ class CacheManager {
   }
 
   String _convertMd5(String str) {
-    return hex(_md5.convert(_utf8encoder.convert(str)).bytes);
+    return hex(md5.convert(_utf8encoder.convert(str)).bytes);
   }
 
   Future<bool> _getCacheFutureResult(
